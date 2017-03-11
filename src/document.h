@@ -20,6 +20,7 @@ typedef enum hoedown_extensions {
 	HOEDOWN_EXT_TABLES = (1 << 0),
 	HOEDOWN_EXT_FENCED_CODE = (1 << 1),
 	HOEDOWN_EXT_FOOTNOTES = (1 << 2),
+	HOEDOWN_EXT_FENCED_MATH = (1 << 15),
 
 	/* span-level extensions */
 	HOEDOWN_EXT_AUTOLINK = (1 << 3),
@@ -29,6 +30,7 @@ typedef enum hoedown_extensions {
 	HOEDOWN_EXT_QUOTE = (1 << 7),
 	HOEDOWN_EXT_SUPERSCRIPT = (1 << 8),
 	HOEDOWN_EXT_MATH = (1 << 9),
+	HOEDOWN_EXT_MATH_BACKTICK = (1 << 16),
 
 	/* other flags */
 	HOEDOWN_EXT_NO_INTRA_EMPHASIS = (1 << 11),
@@ -42,7 +44,8 @@ typedef enum hoedown_extensions {
 #define HOEDOWN_EXT_BLOCK (\
 	HOEDOWN_EXT_TABLES |\
 	HOEDOWN_EXT_FENCED_CODE |\
-	HOEDOWN_EXT_FOOTNOTES )
+	HOEDOWN_EXT_FENCED_MATH |\
+	HOEDOWN_EXT_FOOTNOTES)
 
 #define HOEDOWN_EXT_SPAN (\
 	HOEDOWN_EXT_AUTOLINK |\
@@ -51,7 +54,8 @@ typedef enum hoedown_extensions {
 	HOEDOWN_EXT_HIGHLIGHT |\
 	HOEDOWN_EXT_QUOTE |\
 	HOEDOWN_EXT_SUPERSCRIPT |\
-	HOEDOWN_EXT_MATH )
+	HOEDOWN_EXT_MATH |\
+	HOEDOWN_EXT_MATH_BACKTICK)
 
 #define HOEDOWN_EXT_FLAGS (\
 	HOEDOWN_EXT_NO_INTRA_EMPHASIS |\
