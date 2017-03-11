@@ -107,6 +107,16 @@
             "flags": ["--math"]
         },
         {
+            "input": "Tests/FencedMath.text",
+            "output": "Tests/FencedMath.html",
+            "flags": ["--fenced-math"]
+        },
+        {
+            "input": "Tests/BacktickMath.text",
+            "output": "Tests/BacktickMath.html",
+            "flags": ["--backtick-math"]
+        },
+        {
             "input": "Tests/Underline.text",
             "output": "Tests/Underline.html",
             "flags": ["--underline"]

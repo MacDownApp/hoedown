@@ -40,6 +40,7 @@ static struct extension_category_info categories_info[] = {
 static struct extension_info extensions_info[] = {
 	{HOEDOWN_EXT_TABLES, "tables", "Parse PHP-Markdown style tables."},
 	{HOEDOWN_EXT_FENCED_CODE, "fenced-code", "Parse fenced code blocks."},
+	{HOEDOWN_EXT_FENCED_MATH|HOEDOWN_EXT_FENCED_CODE, "fenced-math", "Parse fenced math blocks."},
 	{HOEDOWN_EXT_FOOTNOTES, "footnotes", "Parse footnotes."},
 
 	{HOEDOWN_EXT_AUTOLINK, "autolink", "Automatically turn safe URLs into links."},
@@ -49,6 +50,7 @@ static struct extension_info extensions_info[] = {
 	{HOEDOWN_EXT_QUOTE, "quote", "Render \"quotes\" as <q>quotes</q>."},
 	{HOEDOWN_EXT_SUPERSCRIPT, "superscript", "Parse super^script."},
 	{HOEDOWN_EXT_MATH, "math", "Parse TeX $$math$$ syntax, Kramdown style."},
+	{HOEDOWN_EXT_MATH_BACKTICK|HOEDOWN_EXT_MATH, "backtick-math", "Parse $`math`$ syntax."},
 
 	{HOEDOWN_EXT_NO_INTRA_EMPHASIS, "disable-intra-emphasis", "Disable emphasis_between_words."},
 	{HOEDOWN_EXT_SPACE_HEADERS, "space-headers", "Require a space after '#' in headers."},

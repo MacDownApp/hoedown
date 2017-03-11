@@ -746,8 +746,13 @@ parse_math(hoedown_buffer *ob, hoedown_document *doc, uint8_t *data, size_t offs
 		while (i < size && data[i] != (uint8_t)end[0])
 			i++;
 
-		if (i >= size)
-			return 0;
+		if (i >= size) {
+			if (delimsz == 0) {
+				break;
+			} else {
+				return 0;
+			}
+		}
 
 		if (!is_escaped(data, i) && !(i + delimsz > size)
 			&& memcmp(data + i, end, delimsz) == 0)
@@ -1375,6 +1380,10 @@ char_math(hoedown_buffer *ob, hoedown_document *doc, uint8_t *data, size_t offse
 	if (size > 1 && data[1] == '$')
 		return parse_math(ob, doc, data, offset, size, "$$", 2, 1);
 
+	/* gitlab style dollar backtick */
+	if (size > 1 && doc->ext_flags & HOEDOWN_EXT_MATH_BACKTICK && data[1] == '`')
+		return parse_math(ob, doc, data, offset, size, "`$", 2, 0);
+
 	/* single dollar allowed only with MATH_EXPLICIT flag */
 	if (doc->ext_flags & HOEDOWN_EXT_MATH_EXPLICIT)
 		return parse_math(ob, doc, data, offset, size, "$", 1, 0);
@@ -1791,7 +1800,16 @@ parse_fencedcode(hoedown_buffer *ob, hoedown_document *doc, uint8_t *data, size_
 	text.data = data + text_start;
 	text.size = line_start - text_start;
 
-	if (doc->md.blockcode)
+	if ((doc->ext_flags & HOEDOWN_EXT_FENCED_MATH) && 
+		strncasecmp((const char *)lang.data, "math", lang.size) == 0)
+	{
+		hoedown_buffer *tmp = newbuf(doc, BUFFER_BLOCK);
+		parse_math(tmp, doc, text.data, 0, text.size, "", 0, 1);
+		if (doc->md.paragraph)
+			doc->md.paragraph(ob, tmp, &doc->data);
+		popbuf(doc, BUFFER_BLOCK);
+	}
+	else if (doc->md.blockcode)
 		doc->md.blockcode(ob, text.size ? &text : NULL, lang.size ? &lang : NULL, &doc->data);
 
 	return i;
