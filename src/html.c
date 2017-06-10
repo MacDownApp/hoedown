@@ -219,13 +219,17 @@ rndr_header(hoedown_buffer *ob, const hoedown_buffer *content, int level, const 
 	if (ob->size)
 		hoedown_buffer_putc(ob, '\n');
 
-	if (level <= state->toc_data.nesting_level)
-		hoedown_buffer_printf(ob, "<h%d id=\"toc_%d\">", level, state->toc_data.header_count++);
-	else
-		hoedown_buffer_printf(ob, "<h%d>", level);
-
-	if (content) hoedown_buffer_put(ob, content->data, content->size);
-	hoedown_buffer_printf(ob, "</h%d>\n", level);
+    if (level <= state->toc_data.nesting_level)
+        hoedown_buffer_printf(ob, "<h%d id=\"toc_%d\"> ", level, state->toc_data.header_count++);
+    else
+        hoedown_buffer_printf(ob, "<h%d>", level);
+    
+    hoedown_buffer_printf(ob, "<a name=");
+    
+    if (content) hoedown_buffer_put(ob, content->data, content->size);
+    hoedown_buffer_printf(ob, ">\n");
+    if (content) hoedown_buffer_put(ob, content->data, content->size);
+    hoedown_buffer_printf(ob, "</a></h%d>\n", level);
 }
 
 static int
